@@ -23,4 +23,6 @@ RUN npm install
 
 ENV NODE_ENV=production
 
+ENV HEADLESS_MODE="new"
+
 CMD ["node", "/app"]

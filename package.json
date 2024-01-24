@@ -4,18 +4,21 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"tsc && node --import tsx ./src/index.ts\"",
+        "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"tsc && node --import tsx ./src/index.ts\" | pino-pretty",
         "build": "tsc --outdir ./dist --project tsconfig.json"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "nodemon": "^3.0.3",
+        "pino-pretty": "^10.3.1",
         "tsx": "^4.7.0",
         "typescript": "^5.3.3"
     },
     "dependencies": {
+        "dotenv": "^16.4.1",
         "ical-generator": "^6.0.1",
+        "pino": "^8.17.2",
         "puppeteer": "^21.7.0",
         "puppeteer-extra": "^3.3.6",
         "puppeteer-extra-plugin-stealth": "^2.11.2",

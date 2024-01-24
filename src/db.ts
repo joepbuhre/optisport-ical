@@ -1,4 +1,6 @@
 import sqlite3 from "sqlite3";
+import fs from "node:fs";
+import { logger } from "./logger";
 
 // Open SQLite database
 const initializeDatabase = async () => {
@@ -36,6 +38,20 @@ export const fetchSchedule = async () => {
                 db.close();
                 if (error) reject(error);
 
+                let filterFunc: undefined | ((val: any) => void) = undefined;
+
+                try {
+                    filterFunc = new Function(
+                        fs.readFileSync(process.env.FILTER_PATH).toString()
+                    )();
+                } catch (error) {
+                    logger.info(error);
+                }
+                if (filterFunc) {
+                    logger.info("Filter function found");
+                    logger.info(filterFunc.toString());
+                    result = result.filter(filterFunc);
+                }
                 resolve(<CombinedEvent[]>result);
             });
         }

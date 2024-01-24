@@ -1,4 +1,7 @@
-import puppeteer, { HTTPRequest, HTTPResponse, Page } from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import { HTTPRequest, HTTPResponse, Page } from "puppeteer";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
+
 import { fetchSchedule, insertOrUpdateCombinedEvents, shouldRequest } from "./db";
 const repeatRequest = async (page: Page, request: HTTPRequest, pageNr: number) => {
     let postdata: OptisportPostBody = JSON.parse(request.postData() ?? "{}");
@@ -28,16 +31,21 @@ const repeatRequest = async (page: Page, request: HTTPRequest, pageNr: number) =
 export const fetchDates = async () => {
     let sRequest = await shouldRequest();
 
+    puppeteer.use(StealthPlugin());
+
     if (sRequest === false) {
         // console.log("nope here");
         return;
     }
 
     const browser = await puppeteer.launch({
-        headless: process.env?.["NODE_ENV"] === "production",
+        headless: "new", //process.env?.["NODE_ENV"] === "production",
         args: ["--no-sandbox"],
     });
     const page = await browser.newPage();
+    page.on("error", (err) => console.error("Page error: ", err));
+    page.on("pageerror", (pageerr) => console.error("Page error: ", pageerr));
+    page.on("requestfailed", (request) => console.error("Request failed: ", request.url()));
 
     page.on("response", (response: HTTPResponse) => {
         let search = new RegExp("upcomingeventsschedule");

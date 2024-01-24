@@ -22,7 +22,7 @@ RUN apt update && \
 RUN npm install
 
 ENV NODE_ENV=production
-
 ENV HEADLESS_MODE="new"
+ENV FILTER_PATH=filter.js
 
 CMD ["node", "/app"]

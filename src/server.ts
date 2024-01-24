@@ -13,7 +13,7 @@ export class httpServer {
         this.port = port;
         this.server = http
             .createServer((req, res) => {})
-            .listen(3000, "127.0.0.1", () => {
+            .listen(3000, "0.0.0.0", () => {
                 console.log("Server running at http://127.0.0.1:3000/");
             });
         this.server.on("request", (req, res) => {

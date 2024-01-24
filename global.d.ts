@@ -4,6 +4,7 @@ declare global {
             NODE_ENV: "development" | "production";
             HEADLESS_MODE: boolean | "new";
             FILTER_PATH: string;
+            CALENDER_NAME: string;
         }
     }
 }

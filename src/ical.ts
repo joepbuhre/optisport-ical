@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { fetchSchedule } from "./db";
 
 export const generateIcal = async () => {
-    const calendar = ical({ name: "my first iCal" });
+    const calendar = ical({ name: process.env.CALENDER_NAME ?? "Optisport Ical" });
 
     let schedule = await fetchSchedule().catch((err) => []);
 

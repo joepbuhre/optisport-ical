@@ -1,4 +1,4 @@
-from node:20 as builder
+FROM node:20 as builder
 
 WORKDIR /app
 
@@ -24,5 +24,6 @@ RUN npm install
 ENV NODE_ENV=production
 ENV HEADLESS_MODE="new"
 ENV FILTER_PATH=filter.js
+ENV CALENDER_NAME="Optisport Banenzwemmen"
 
 CMD ["node", "/app"]
